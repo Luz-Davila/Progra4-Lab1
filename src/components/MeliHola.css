@@ -1,0 +1,25 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.melissa {
+    background: #f4f4f4;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.melissa__title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.melissa__extra {
+    font-size: 16px;
+    color: #666;
+}

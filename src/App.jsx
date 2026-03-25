@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import MeliHola from './components/MeliHola.jsx'
 import './App.css'
 import SaludoLuz from './Components/SaludoLuz'
 import SaludoJari from './components-jari/saludoJari'
@@ -36,6 +37,9 @@ function App() {
       <SaludoOscar />
       
       <div className="ticks"></div>
+
+<MeliHola />
+
 
       <section id="next-steps">
         <div id="docs">
