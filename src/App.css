@@ -161,6 +161,10 @@
   }
 }
 
+.saludo {
+  margin-bottom: 20px;
+}
+
 .ticks {
   position: relative;
   width: 100%;

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './saludoJari.css'
 
 export default function saludoJari() {
+  
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [name, setName] = useState('Jarinton')
 
   return (
