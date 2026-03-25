@@ -4,6 +4,8 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import SaludoLuz from './Components/SaludoLuz'
+import SaludoJari from './components-jari/saludoJari'
+import SaludoOscar from './ComponentsOscar/SaludosOscar'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -30,7 +32,8 @@ function App() {
       </section>
 
       <SaludoLuz />
-      <saludoJari />
+      <SaludoJari />
+      <SaludoOscar />
       
       <div className="ticks"></div>
 
