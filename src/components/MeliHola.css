@@ -1,25 +1,32 @@
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.saludo {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
 }
 
-
-.melissa {
-    background: #f4f4f4;
-    padding: 20px;
-    text-align: center;
-    border-radius: 5px;
+.saludo_title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.melissa__title {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 10px;
+.saludo_extra {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 15px;
 }
 
-.melissa__extra {
-    font-size: 16px;
-    color: #666;
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
