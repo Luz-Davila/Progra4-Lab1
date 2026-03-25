@@ -30,6 +30,7 @@ function App() {
       </section>
 
       <SaludoLuz />
+      <saludoJari />
       
       <div className="ticks"></div>
 
