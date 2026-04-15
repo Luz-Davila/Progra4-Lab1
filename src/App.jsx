@@ -7,6 +7,7 @@ import './App.css'
 import SaludoLuz from './Components/SaludoLuz'
 import SaludoJari from './components-jari/saludoJari'
 import SaludoOscar from './ComponentsOscar/SaludosOscar'
+import Quiz from './Components/Quiz';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,6 +38,10 @@ function App() {
       <SaludoJari />
       <SaludoOscar />
       <MeliHola />
+
+      <div className="app-wrapper">
+      <Quiz />
+      </div>
 
       <div className="ticks"></div>
 
