@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
+import "./QuizNeptuno.css";
 
+// Componente principal del quiz de Neptuno
 function App() {
+  // Estado para almacenar la lista de preguntas obtenidas de la API
   const [preguntas, setPreguntas] = useState([]);
+  // Estado para almacenar las respuestas seleccionadas por el usuario (clave: id de pregunta, valor: índice de opción)
   const [respuestas, setRespuestas] = useState({});
+  // Estado para almacenar el resultado final del quiz (puntos obtenidos)
   const [resultado, setResultado] = useState(null);
+  // Estado para el índice de la pregunta actual (empieza en 0)
   const [actual, setActual] = useState(0);
 
+  // Hook useEffect para cargar las preguntas desde la API al montar el componente
   useEffect(() => {
     fetch("https://api.jsonbin.io/v3/b/69df4a01aaba882197ff2632", {
       headers: {
@@ -20,6 +27,7 @@ function App() {
       .catch(error => console.log(error));
   }, []);
 
+  // Función para seleccionar una respuesta para una pregunta específica
   const seleccionarRespuesta = (idPregunta, indiceOpcion) => {
     setRespuestas({
       ...respuestas,
@@ -27,12 +35,14 @@ function App() {
     });
   };
 
+  // Función para avanzar a la siguiente pregunta
   const siguientePregunta = () => {
     if (actual < preguntas.length - 1) {
       setActual(actual + 1);
     }
   };
 
+  // Función para calcular el resultado final del quiz
   const calcularResultado = () => {
     let puntos = 0;
 
@@ -45,20 +55,14 @@ function App() {
     setResultado(puntos);
   };
 
+  // Función para reiniciar el quiz a su estado inicial
   const reiniciarQuiz = () => {
     setRespuestas({});
     setResultado(null);
     setActual(0);
   };
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-      background: "#ebd7d7",
-      fontFamily: "Arial"
-    }}>
+    <div className="quiz-container">
       
       {preguntas.length === 0 ? (
         <p>Cargando preguntas del quiz...</p>
@@ -66,14 +70,7 @@ function App() {
         
         <div
           key={actual} 
-          style={{
-            width: "350px",
-            background: "white",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "0 3px 10px rgba(4, 4, 4, 0.1)",
-            textAlign: "center"
-          }}
+          className="question-container"
         >
           
           <h2>Pregunta {actual + 1} de {preguntas.length}</h2>
@@ -84,16 +81,7 @@ function App() {
             <div
               key={i}
               onClick={() => seleccionarRespuesta(preguntas[actual].id, i)}
-              style={{
-                padding: "10px",
-                margin: "8px 0",
-                borderRadius: "5px",
-                cursor: "pointer",
-                background:
-                  respuestas[preguntas[actual].id] === i
-                    ? "#d86ec3"
-                    : "#eeeeee"
-              }}
+              className={`option ${respuestas[preguntas[actual].id] === i ? 'selected' : ''}`}
             >
               {op}
             </div>
@@ -113,12 +101,7 @@ function App() {
       ) : (
         <div
           key="resultado" 
-          style={{
-            background: "white",
-            padding: "30px",
-            borderRadius: "10px",
-            textAlign: "center"
-          }}
+          className="result-container"
         >
           <h2>Resultado final</h2>
           <h1>{resultado} / {preguntas.length}</h1>

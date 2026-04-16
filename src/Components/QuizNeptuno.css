@@ -1,0 +1,36 @@
+.quiz-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #ebd7d7;
+  font-family: Arial;
+}
+
+.question-container {
+  width: 350px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(4, 4, 4, 0.1);
+  text-align: center;
+}
+
+.option {
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #eeeeee;
+}
+
+.option.selected {
+  background: #d86ec3;
+}
+
+.result-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
