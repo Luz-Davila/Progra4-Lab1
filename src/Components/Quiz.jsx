@@ -12,10 +12,11 @@ export default function Quiz() {
     selectedAnswer === questions[currentQuestion]?.correctAnswer;
 
   useEffect(() => {
+    const key = import.meta.env.VITE_JSONBIN_MASTER_KEY;
+
     fetch("https://api.jsonbin.io/v3/b/69dc1641aaba882197f08d7a", {
       headers: {
-        "X-Master-Key":
-          "$2a$10$/4mFvhBmVDk213lTxfPibuKLHOdVS/R/4zDYgBwt.V5GSrl.1oDKq",
+        "X-Master-Key": key,
       },
     })
       .then((res) => res.json())
@@ -37,7 +38,6 @@ export default function Quiz() {
 
   return (
     <div className="quiz-container">
-     
       {isCorrect && <Confetti />}
 
       <h2>Quiz de Informática - Luz :)</h2>
@@ -48,7 +48,6 @@ export default function Quiz() {
 
       {questions.length > 0 ? (
         <div>
-    
           <div className="question">
             {questions[currentQuestion].question}
           </div>
