@@ -1,36 +1,76 @@
+/* Fondo general */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+/* Contenedor principal centrado */
 .quiz-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #ebd7d7;
-  font-family: Arial;
 }
 
-.question-container {
-  width: 350px;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(4, 4, 4, 0.1);
+/* Caja tipo tarjeta */
+.question-container,
+.result-container {
+  background: #111827;
+  padding: 30px;
+  border-radius: 20px;
+  width: 400px;
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  color: white;
 }
 
+/* Opciones */
 .option {
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 5px;
+  background: #1f2937;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
   cursor: pointer;
-  background: #eeeeee;
+  transition: 0.3s;
+}
+
+.option:hover {
+  background: #374151;
 }
 
 .option.selected {
-  background: #d86ec3;
+  background: #2563eb;
 }
 
-.result-container {
-  background: white;
-  padding: 30px;
+.option.correct {
+  background: #22c55e;
+  color: white;
+}
+
+.option.incorrect {
+  background: #ef4444;
+  color: white;
+}
+
+/* Botón */
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
   border-radius: 10px;
-  text-align: center;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+/* Feedback */
+.feedback {
+  margin-top: 10px;
+  font-weight: bold;
 }

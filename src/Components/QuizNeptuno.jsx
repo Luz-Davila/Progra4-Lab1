@@ -1,22 +1,20 @@
+import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import "./QuizNeptuno.css";
 
-// Componente principal del quiz de Neptuno
-function App() {
-  // Estado para almacenar la lista de preguntas obtenidas de la API
-  const [preguntas, setPreguntas] = useState([]);
-  // Estado para almacenar las respuestas seleccionadas por el usuario (clave: id de pregunta, valor: índice de opción)
-  const [respuestas, setRespuestas] = useState({});
-  // Estado para almacenar el resultado final del quiz (puntos obtenidos)
-  const [resultado, setResultado] = useState(null);
-  // Estado para el índice de la pregunta actual (empieza en 0)
-  const [actual, setActual] = useState(0);
+const clave = import.meta.env.VITE_JSON_MASTER_KEY;
 
-  // Hook useEffect para cargar las preguntas desde la API al montar el componente
+function App() {
+  const [preguntas, setPreguntas] = useState([]);
+  const [respuestas, setRespuestas] = useState({});
+  const [resultado, setResultado] = useState(null);
+  const [actual, setActual] = useState(0);
+  const [validadas, setValidadas] = useState({}); // NUEVO
+
   useEffect(() => {
     fetch("https://api.jsonbin.io/v3/b/69df4a01aaba882197ff2632", {
       headers: {
-        "X-Master-Key": "$2a$10$Y9gQSbMH0QojetTPrShSPuHKhia1M.HdMNg.rXsydTwfVw0btkwyu",
+        "X-Master-Key": clave,
         "Content-Type": "application/json"
       }
     })
@@ -27,22 +25,36 @@ function App() {
       .catch(error => console.log(error));
   }, []);
 
-  // Función para seleccionar una respuesta para una pregunta específica
   const seleccionarRespuesta = (idPregunta, indiceOpcion) => {
-    setRespuestas({
-      ...respuestas,
-      [idPregunta]: indiceOpcion
-    });
-  };
+  if (validadas[idPregunta]) return;
 
-  // Función para avanzar a la siguiente pregunta
+  setRespuestas({
+    ...respuestas,
+    [idPregunta]: indiceOpcion
+  });
+
+  const preguntaActual = preguntas.find(p => p.id === idPregunta);
+
+  if (indiceOpcion === preguntaActual.respuestaCorrecta) {
+    confetti({
+      particleCount: 120,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  }
+
+  setValidadas({
+    ...validadas,
+    [idPregunta]: true
+  });
+};
+
   const siguientePregunta = () => {
     if (actual < preguntas.length - 1) {
       setActual(actual + 1);
     }
   };
 
-  // Función para calcular el resultado final del quiz
   const calcularResultado = () => {
     let puntos = 0;
 
@@ -55,12 +67,13 @@ function App() {
     setResultado(puntos);
   };
 
-  // Función para reiniciar el quiz a su estado inicial
   const reiniciarQuiz = () => {
     setRespuestas({});
     setResultado(null);
     setActual(0);
+    setValidadas({});
   };
+
   return (
     <div className="quiz-container">
       
@@ -68,24 +81,48 @@ function App() {
         <p>Cargando preguntas del quiz...</p>
       ) : resultado === null ? (
         
-        <div
-          key={actual} 
-          className="question-container"
-        >
+        <div key={actual} className="question-container">
           
           <h2>Pregunta {actual + 1} de {preguntas.length}</h2>
 
           <h3>{preguntas[actual].pregunta}</h3>
 
-          {preguntas[actual].opciones.map((op, i) => (
-            <div
-              key={i}
-              onClick={() => seleccionarRespuesta(preguntas[actual].id, i)}
-              className={`option ${respuestas[preguntas[actual].id] === i ? 'selected' : ''}`}
-            >
-              {op}
+          {preguntas[actual].opciones.map((op, i) => {
+            const id = preguntas[actual].id;
+            const esSeleccionada = respuestas[id] === i;
+            const esCorrecta = i === preguntas[actual].respuestaCorrecta;
+            const yaValido = validadas[id];
+
+            let clase = "option";
+
+            if (yaValido) {
+              if (esCorrecta) {
+                clase += " correct"; // verde
+              } else if (esSeleccionada && !esCorrecta) {
+                clase += " incorrect"; // rojo
+              }
+            } else if (esSeleccionada) {
+              clase += " selected";
+            }
+
+            return (
+              <div
+                key={i}
+                onClick={() => seleccionarRespuesta(id, i)}
+                className={clase}
+              >
+                {op}
+              </div>
+            );
+          })}
+
+          {validadas[preguntas[actual].id] && (
+            <div className="feedback">
+              {respuestas[preguntas[actual].id] === preguntas[actual].respuestaCorrecta
+                ? "Correcto"
+                : "Incorrecto"}
             </div>
-          ))}
+          )}
 
           {actual < preguntas.length - 1 ? (
             <button onClick={siguientePregunta}>
@@ -99,10 +136,7 @@ function App() {
         </div>
 
       ) : (
-        <div
-          key="resultado" 
-          className="result-container"
-        >
+        <div key="resultado" className="result-container">
           <h2>Resultado final</h2>
           <h1>{resultado} / {preguntas.length}</h1>
 
